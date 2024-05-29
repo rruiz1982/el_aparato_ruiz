@@ -19,6 +19,6 @@ public interface IVentaService {
 
     public Venta findVenta(int id);
 
-    public void editVenta(Venta vent);
+    public Venta editVenta  (Venta vent);
 
 }
