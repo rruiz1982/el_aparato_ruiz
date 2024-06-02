@@ -1,0 +1,15 @@
+Mis usuarios son a nivel de reino 
+
+admin contraseña  123
+venderdor contraseña  123
+repositor contraseña  123
+
+Realm roles
+app_administrador
+app_repositor
+app_vendedor
+
+los clientes son 
+
+keycloak-admin
+api-gateway-client

@@ -2,6 +2,7 @@ package com.elaparato.service;
 
 import com.elaparato.model.Producto;
 import com.elaparato.model.Venta;
+import com.elaparato.repository.IProductoRepository;
 import com.elaparato.repository.IVentaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class VentaService implements IVentaService{
     @Autowired
     private IVentaRepository ventaRepo;
 
+    @Autowired
+    private IProductoRepository productoRepository;
+
 
     @Override
     public List<Venta> getVentas() {
@@ -24,6 +28,18 @@ public class VentaService implements IVentaService{
 
     @Override
     public void saveVenta(Venta vent) {
+        List<Producto> productos = vent.getListaProductos();
+        for (int i = 0; i < productos.size(); i++) {
+            Producto producto = productos.get(i);
+            Optional<Producto> managedProducto = productoRepository.findById(producto.getId());
+            if (managedProducto.isPresent()) {
+                productos.set(i, managedProducto.get());
+            } else {
+                // Manejar el caso donde el producto no existe, si es necesario
+                productoRepository.save(producto);
+            }
+        }
+        vent.setListaProductos(productos);
         ventaRepo.save(vent);
     }
 

@@ -10,7 +10,8 @@ import java.util.List;
 public class Venta {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "venta_seq")
+    @SequenceGenerator(name = "venta_seq", sequenceName = "venta_seq", allocationSize = 1)
     private int id_venta;
 
     private Date fecha;
@@ -22,4 +23,10 @@ public class Venta {
             inverseJoinColumns = @JoinColumn(name = "id_producto")
     )
     private List<Producto> listaProductos;
+
+    public Venta(int id_venta, Date fecha, List<Producto> listaProductos) {
+        this.id_venta = id_venta;
+        this.fecha = fecha;
+        this.listaProductos = listaProductos;
+    }
 }
