@@ -12,14 +12,15 @@ import java.util.List;
 @Entity
 public class Producto {
     @Id
-    @GeneratedValue(strategy= GenerationType.SEQUENCE)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE,  generator = "producto_seq")
+    @SequenceGenerator(name = "producto_seq", sequenceName = "producto_seq", allocationSize = 1)
     private int id;
     private String nombre;
     private String descripcion;
     private int precio;
     private int cantidad;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "listaProductos", cascade = CascadeType.ALL)
     //@JoinColumn (name="id_venta")
     @JsonIgnore //importante agregar para evitar errores de formato en la response
     private List<Venta> listaVentas;

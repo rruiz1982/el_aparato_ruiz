@@ -2,6 +2,7 @@ package com.elaparato.controller;
 import com.elaparato.model.Producto;
 import com.elaparato.service.IProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public class ProductoController {
 
     //crear un nuevo producto
     @PostMapping("/productos/create")
+    @PreAuthorize("hasAnyRole('ROLE_REPOSITOR', 'app_administrador')")
     public String createProducto(@RequestBody Producto prod) {
         prodServ.saveProducto(prod);
         return "Producto creado correctamente";
